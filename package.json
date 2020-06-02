@@ -1,0 +1,27 @@
+{
+  "name": "starter-snake-node",
+  "version": "1.0.0",
+  "description": "A simple Battlesnake written in JavaScript for Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js",
+    "debug": "nodemon --inspect index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BattlesnakeOfficial/starter-snake-node.git"
+  },
+  "author": "BattlesnakeOfficial",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BattlesnakeOfficial/starter-snake-node/issues"
+  },
+  "homepage": "https://github.com/BattlesnakeOfficial/starter-snake-node#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
