@@ -40,7 +40,7 @@ module.exports = {
   // Направление до ближайшей жрачки
   foodDirection(gameData, moves) {
 
-    if(gameData.food.length == 0 || gameData.self.health_points > gameData.height + gameData.width) return moves;
+    if(gameData.food.length == 0 || gameData.self.health_points > 50) return moves;
 
     const closestFood = gameData.food
       .sort((a,b) => {

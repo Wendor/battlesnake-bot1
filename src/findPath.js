@@ -40,7 +40,7 @@ function findPath(gameData, iterations) {
       }
     }
   }
-  if(iterations == (gameData.width+gameData.height)*2) return move;
+  if(iterations == (gameData.width+gameData.height)*2) return moves[0];
   return false;
 }
 
