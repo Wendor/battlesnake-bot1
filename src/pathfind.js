@@ -1,27 +1,13 @@
 module.exports = {
   // Ходы которые не убьют
-  safeMoves (gameData) {
-    const self = gameData.snakes.find(snake => snake.id == gameData.you);
-
-    const avaiableMoves = [
-      { direction: "right", x: self.coords[0][0] + 1, y: self.coords[0][1] },
-      { direction: "down", x: self.coords[0][0], y: self.coords[0][1] + 1 },
-      { direction: "left", x: self.coords[0][0] - 1, y: self.coords[0][1] },
-      { direction: "up", x: self.coords[0][0], y: self.coords[0][1] - 1 }
-    ];
-
+  avaiabledMoves (gameData, moves) {
     let snakeBodies = [];
-    let snakeHeads = [];
     
     for(let snake of gameData.snakes) {
       snakeBodies = [...snakeBodies, ...snake.coords];
-      
-      if(snake.id !== self.id) {
-        snakeHeads.push(snake.coords[0]);
-      }
     }
 
-    return avaiableMoves
+    return moves
       // Не ходить за границы поля
       .filter(move => {
         return  move.x < gameData.width &&
@@ -31,27 +17,53 @@ module.exports = {
       })
       // Не ходить в себя и тела других змей
       .filter(move => !snakeBodies.find(coord => coord[0] == move.x && coord[1] == move.y));
-    ;
+  },
+
+  headsDetection(gameData, moves) {
+    // Очковать хедшота от длинных змей
+    moves.forEach((move, i) => {
+      for(let snake of gameData.snakes) {
+        if(
+          snake.id != gameData.self.id &&
+          Math.abs(snake.coords[0][0] - move.x) <= 1 &&
+          Math.abs(snake.coords[0][1] - move.y) <= 1 &&
+          gameData.self.coords.length <= snake.coords.length
+        ) {
+          moves[i].order -= 0.2;
+        }
+      }
+    });
+
+    return moves;
   },
 
   // Направление до ближайшей жрачки
-  foodDirection(gameData, safeMoves) {
-    const self = gameData.snakes.find(snake => snake.id == gameData.you);
+  foodDirection(gameData, moves) {
 
-    if(gameData.food.length == 0 || self.health_points > gameData.height + gameData.width) return safeMoves;
+    if(gameData.food.length == 0 || gameData.self.health_points > gameData.height + gameData.width) return moves;
 
     const closestFood = gameData.food
       .sort((a,b) => {
-        return  (Math.abs(self.coords[0][0] - a[0]) + Math.abs(self.coords[0][1] - a[1])) -
-                (Math.abs(self.coords[0][0] - b[0]) + Math.abs(self.coords[0][1] - b[1]));
+        return  (Math.abs(gameData.self.coords[0][0] - a[0]) + Math.abs(gameData.self.coords[0][1] - a[1])) -
+                (Math.abs(gameData.self.coords[0][0] - b[0]) + Math.abs(gameData.self.coords[0][1] - b[1]));
       })[0];
 
-    safeMoves.forEach((move, idx) => {
-      safeMoves[idx].foodDistance = Math.abs(move.x - closestFood[0]) + Math.abs(move.y - closestFood[1]);
-    })
+      moves.forEach((move, idx) => {
+        moves[idx].foodDistance = Math.abs(move.x - closestFood[0]) + Math.abs(move.y - closestFood[1]);
+    });
 
-    const foodMoves = safeMoves.sort((move1, move2) => move1.foodDistance - move2.foodDistance);
+    let foodMove = moves.sort((move1, move2) => move1.foodDistance - move2.foodDistance)[0];
+    
+    moves.forEach((move, i) => {
+      if(move.direction == foodMove.direction) {
+        move.order += 0.1;
+      }
+    });
 
-    return [foodMoves[0]];
+    return moves;
+  },
+
+  vangaMode(gameData, moves) {
+    return moves;
   }
 }
