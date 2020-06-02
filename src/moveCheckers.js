@@ -61,9 +61,5 @@ module.exports = {
     });
 
     return moves;
-  },
-
-  vangaMode(gameData, moves) {
-    return moves;
   }
 }
