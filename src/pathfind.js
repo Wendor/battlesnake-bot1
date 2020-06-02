@@ -38,21 +38,19 @@ module.exports = {
   foodDirection(gameData, safeMoves) {
     const self = gameData.snakes.find(snake => snake.id == gameData.you);
 
-    if(gameData.food.length == 0) return safeMoves;
+    if(gameData.food.length == 0 || self.health_points > gameData.height + gameData.width) return safeMoves;
 
-    const food = gameData.food
+    const closestFood = gameData.food
       .sort((a,b) => {
-        return  (Math.abs(self.coords[0][0] - b[0]) + Math.abs(self.coords[0][1] - b[1])) -
-                (Math.abs(self.coords[0][0] - a[0]) + Math.abs(self.coords[0][1] - a[1]));
+        return  (Math.abs(self.coords[0][0] - a[0]) + Math.abs(self.coords[0][1] - a[1])) -
+                (Math.abs(self.coords[0][0] - b[0]) + Math.abs(self.coords[0][1] - b[1]));
       })[0];
 
-    let foodMoves = safeMoves.map(move => {
-        move.foodDistance = Math.abs(move.x - food[0]) + Math.abs(move.y - food[1]);
-        return move;
-      })
-      .sort((move1, move2) => move1.foodDistance - move2.foodDistance);
+    safeMoves.forEach((move, idx) => {
+      safeMoves[idx].foodDistance = Math.abs(move.x - closestFood[0]) + Math.abs(move.y - closestFood[1]);
+    })
 
-    console.log(foodMoves);
+    const foodMoves = safeMoves.sort((move1, move2) => move1.foodDistance - move2.foodDistance);
 
     return [foodMoves[0]];
   }

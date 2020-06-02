@@ -2,5 +2,4 @@
 *.pyc
 .cmd
 .idea
-.vscode
 node_modules
