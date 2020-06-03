@@ -27,8 +27,8 @@ const headsDetection = (gameData: GameData, moves: Move[]) => {
     for(let snake of gameData.snakes) {
       if(
         snake.id != gameData.self.id &&
-        Math.abs(snake.coords[0][0] - move.x) <= 1 &&
-        Math.abs(snake.coords[0][1] - move.y) <= 1 &&
+        Math.abs(snake.coords[0][0] - move.x) <= 2 &&
+        Math.abs(snake.coords[0][1] - move.y) <= 2 &&
         gameData.self.coords.length <= snake.coords.length
       ) {
         moves[i].order -= 0.2;
