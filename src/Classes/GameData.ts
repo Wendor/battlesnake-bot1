@@ -122,7 +122,7 @@ class GameData {
     return this.snakes
             .map(snake => {
               // разрешим ходить в свой хвост
-              if(snake.id == this.self().id && !this.collideFood(move)) {
+              if(snake.id == this.self().id) {
                 return snake.coords.slice(0, -1);
               }
               return snake.coords;
