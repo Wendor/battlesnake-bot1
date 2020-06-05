@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --inspect -r ts-node/register src/server.ts",
+    "start": "node --inspect -r ts-node/register src/Server.ts",
     "watch": "nodemon"
   },
   "repository": {
