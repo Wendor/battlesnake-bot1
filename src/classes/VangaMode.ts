@@ -58,7 +58,7 @@ class VangaMode {
     console.log(new Array(this.gameData.width*2 - 1).fill("-").join(""));
     */
    
-    const moves = game.findSelfMoves(this.first);
+    const moves = game.findSelfMoves(true);
 
     for(let move of moves) {
       const childMoves = [...selfMoves.moves, move];
