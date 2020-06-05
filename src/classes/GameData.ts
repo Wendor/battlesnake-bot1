@@ -11,8 +11,11 @@ class GameData {
   public game_id: string      = "";
   public food: TCoord[]       = [];
   public dead_snakes: Snake[] = [];
+  public raw: TGameData       = null;
+  
 
   constructor(gameData: TGameData) {
+    this.raw = gameData;
     this.you = gameData.you;
     this.turn = gameData.turn;
     this.snakes = gameData.snakes.map(snake => new Snake(snake));
@@ -74,6 +77,23 @@ class GameData {
     move.food_distance = Math.abs(move.x - closestFood.x) + Math.abs(move.y - closestFood.y);
     return move;
   
+  }
+
+  genGrid(): number[][] {
+    const grid: number[][] = [];
+    for (let x = 0; x < this.width; x++) {
+      if (grid[x] === undefined) grid[x] = [];
+      for (let y = 0; y < this.height; y++) {
+	        grid[x][y] = 0;
+      }
+    }
+
+    this.snakes
+      .map(snake => snake.coords)
+      .reduce((bodies, coords) => [...bodies, ...coords], [])
+      .forEach(coord => grid[coord.y][coord.x] = 1)
+
+    return grid;
   }
 }
 

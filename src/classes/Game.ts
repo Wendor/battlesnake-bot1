@@ -17,10 +17,11 @@ class Game {
   }
 
   findSelfMoves(): TMove[] {
+    if(this.gameData.self().health_points == 0) return [];
     let moves = this.gameData.getMovesByID(this.gameData.you);
 
     // Healing
-    if(this.gameData.self().health_points < 50) {
+    if(this.gameData.self().health_points < 95) {
       moves = moves.map(move => this.gameData.calcFoodDistance(move));
       const minFoodDistance = Math.min(...moves.map(move => move.food_distance));
       moves.forEach((move, i) => {

@@ -1,5 +1,4 @@
 import { TSnakeMoves } from "../global.types";
-import { GameData } from "../global.classes";
 
 type TVangaOptions = {
   [index: string]: any;
@@ -7,7 +6,8 @@ type TVangaOptions = {
   headPriority?: number;
   depth?: number;
   step?: number,
-  snakeMoves?: TSnakeMoves[]
+  snakeMoves?: TSnakeMoves[],
+  startTime?: number
 }
 
 export default TVangaOptions;
