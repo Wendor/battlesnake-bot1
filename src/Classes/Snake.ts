@@ -1,7 +1,5 @@
 import { TSnake, TCoord, TMove } from '../Global';
 
-
-
 /**
  * Змея.
  *
