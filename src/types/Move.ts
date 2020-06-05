@@ -1,11 +1,11 @@
-declare interface Move {
-  direction: Direction,
+import { TDirection } from '../global.types';
+
+type TMove = {
+  direction: TDirection,
   x: number,
   y: number,
   order: number,
   food_distance?: number
 }
 
-type Direction = 'up' | 'down' | 'left' | 'right';
-
-export default Move;
+export default TMove;
