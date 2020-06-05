@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import { GameData, VangaMode } from "../global.classes";
+import { GameData, Game } from "../Global";
 
 import { performance } from 'perf_hooks';
 
+// Стрелочки для красивого отображения списка ходов
 const directionArrows = {
   up: "↑",
   down: "↓",
@@ -10,14 +11,22 @@ const directionArrows = {
   right: "→"
 };
 
+
+/**
+ * Хендлер для роута /move
+ *
+ * @export
+ * @param {Request} request
+ * @param {Response} response
+ */
 export default function (request: Request, response: Response) {
   const startTime = performance.now();
   const gameData: GameData = new GameData(request.body);
 
-  const vm = new VangaMode(gameData, {
+  const game = new Game(gameData, [], {
     startTime: startTime
   });
-  const moves = vm.findPath();
+  const moves = game.vanga();
 
   const move = moves[0] ? moves[0].direction : "up";
   const workTime = performance.now() - startTime;

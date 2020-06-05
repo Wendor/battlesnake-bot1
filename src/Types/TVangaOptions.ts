@@ -1,12 +1,12 @@
-import { TSnakeMoves } from "../global.types";
+import { TSnakeMoves } from "../Global";
 
+/**
+ * Ингридиенты для черной магии
+ */
 type TVangaOptions = {
   [index: string]: any;
-  footPriority?: number;
-  headPriority?: number;
   depth?: number;
   step?: number,
-  snakeMoves?: TSnakeMoves[],
   startTime?: number
 }
 

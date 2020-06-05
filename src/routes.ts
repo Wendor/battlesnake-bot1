@@ -1,9 +1,9 @@
 import { Router } from "express";
 
-import indexHandler from "./handlers/index";
-import startHandler from "./handlers/start";
-import moveHandler from "./handlers/move";
-import endHandler from "./handlers/end";
+import indexHandler from "./Handlers/Index";
+import startHandler from "./Handlers/Start";
+import moveHandler from "./Handlers/Move";
+import endHandler from "./Handlers/End";
 
 const router = Router();
 
