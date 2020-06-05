@@ -14,7 +14,9 @@ export default function (request: Request, response: Response) {
   const startTime = performance.now();
   const gameData: GameData = new GameData(request.body);
 
-  const vm = new VangaMode(gameData, {startTime: startTime});
+  const vm = new VangaMode(gameData, {
+    startTime: startTime
+  });
   const moves = vm.findPath();
 
   const move = moves[0] ? moves[0].direction : "up";

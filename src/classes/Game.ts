@@ -16,12 +16,12 @@ class Game {
     }
   }
 
-  findSelfMoves(): TMove[] {
+  findSelfMoves(findFood = false): TMove[] {
     if(this.gameData.self().health_points == 0) return [];
     let moves = this.gameData.getMovesByID(this.gameData.you);
 
     // Healing
-    if(this.gameData.self().health_points < 95) {
+    if(findFood && this.gameData.self().health_points < 101) {
       moves = moves.map(move => this.gameData.calcFoodDistance(move));
       const minFoodDistance = Math.min(...moves.map(move => move.food_distance));
       moves.forEach((move, i) => {
@@ -30,6 +30,14 @@ class Game {
         }
       });
     }
+
+    // heads
+    moves = moves.map(move => this.gameData.calcHeadsDistance(move));
+    moves.forEach((move, i) => {
+      if(move.head_distance <= 2) {
+        moves[i].order -= 0.2;
+      }
+    });
 
     moves = this.randomizeMoves(moves).sort((a, b) => b.order - a.order);
     

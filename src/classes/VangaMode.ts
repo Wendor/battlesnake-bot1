@@ -30,6 +30,11 @@ class VangaMode {
 
     if(!selfMoves) {
       this.first = true;
+      this.options.depth = Math.max(
+        (this.gameData.width + this.gameData.height)*2,
+        this.gameData.self().coords.length*2,
+        this.gameData.self().health_points
+      );
       maxPath = [];
       selfMoves = { id: this.gameData.you, moves: []};
     }
@@ -53,7 +58,7 @@ class VangaMode {
     console.log(new Array(this.gameData.width*2 - 1).fill("-").join(""));
     */
    
-    const moves = game.findSelfMoves();
+    const moves = game.findSelfMoves(this.first);
 
     for(let move of moves) {
       const childMoves = [...selfMoves.moves, move];

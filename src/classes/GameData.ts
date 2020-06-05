@@ -66,6 +66,16 @@ class GameData {
             .findIndex(coord => coord.x == move.x && coord.y == move.y) != -1;
   }
 
+  calcHeadsDistance(move: TMove): TMove {
+    const headsDistance = this.snakes
+            .filter(snake => snake.id != this.self().id)
+            .map(snake => snake.coords[0])
+            .map(coord => Math.abs(move.x - coord.x) + Math.abs(move.y - coord.y))
+            .reduce((minHeadDist, dist) => Math.min(minHeadDist, dist), 100);
+    move.head_distance = headsDistance;
+    return move;
+  }
+
   calcFoodDistance(move: TMove): TMove {
     if(this.food.length == 0) return move;
 
@@ -73,10 +83,9 @@ class GameData {
       return  (Math.abs(move.x - a.x) + Math.abs(move.y - a.y)) -
               (Math.abs(move.x - b.x) + Math.abs(move.y - b.y));
     })[0];
-  
+
     move.food_distance = Math.abs(move.x - closestFood.x) + Math.abs(move.y - closestFood.y);
     return move;
-  
   }
 
   genGrid(): number[][] {
