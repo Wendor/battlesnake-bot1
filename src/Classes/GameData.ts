@@ -120,7 +120,13 @@ class GameData {
    */
   collideSnakes(move: TMove): boolean {
     return this.snakes
-            .map(snake => snake.coords)
+            .map(snake => {
+              // разрешим ходить в свой хвост
+              if(snake.id == this.self().id && !this.collideFood(move)) {
+                return snake.coords.slice(0, -1);
+              }
+              return snake.coords;
+            })
             .reduce((bodies, coords) => [...bodies, ...coords], [])
             .findIndex(coord => coord.x == move.x && coord.y == move.y) != -1;
   }
