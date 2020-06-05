@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
-import { GameData, Snake, Move } from "../global";
+import { GameData, VangaMode } from "../global.classes";
 
-import { findPath } from "../libs/findPath";
 import { performance } from 'perf_hooks';
 
-const directionArrow = {
+const directionArrows = {
   up: "↑",
   down: "↓",
   left: "←",
@@ -13,18 +12,15 @@ const directionArrow = {
 
 export default function (request: Request, response: Response) {
   const startTime = performance.now();
-  const gameData: GameData = request.body;
-  //console.log(gameData);
+  const gameData: GameData = new GameData(request.body);
 
+  const vm = new VangaMode(gameData, {startTime: startTime});
+  const moves = vm.findPath();
 
-  gameData.self = gameData.snakes.find((snake: Snake) => snake.id == gameData.you);
-
-  const foundMove: Move = findPath(gameData, (gameData.width+gameData.height)*2);
-  //console.log(findedMove)
-  const move = foundMove && foundMove.direction ? foundMove.direction : "up";
-
+  const move = moves[0] ? moves[0].direction : "up";
   const workTime = performance.now() - startTime;
-  console.log('MOVE: ' + directionArrow[move] + ", " + workTime.toFixed(2) + "ms");
+  console.log("(" + moves.length + ") " + moves.map(move => directionArrows[move.direction]).join(" "));
+  console.log('MOVE: ' + directionArrows[move] + ", " + workTime.toFixed(2) + "ms");
   response.status(200).send({
     move: move
   });
