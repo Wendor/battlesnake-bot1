@@ -67,7 +67,7 @@ class Game {
     if(findFood) {
       moves = moves.map(move => this.gameData.calcFoodDistance(move));
       const minFoodDistance = Math.min(...moves.map(move => move.food_distance));
-      if(this.gameData.self().health_points < Math.max(60, this.gameData.width) ||
+      if(this.gameData.self().health_points < Math.max(40, this.gameData.width) ||
           minFoodDistance <= 5) {
         moves.forEach((move, i) => {
           if(move.food_distance == minFoodDistance) {
