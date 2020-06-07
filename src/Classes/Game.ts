@@ -64,14 +64,17 @@ class Game {
     let moves = this.gameData.getMovesByID(this.gameData.you);
 
     // Поиск еды
-    if(findFood && this.gameData.self().health_points < 101) {
+    if(findFood) {
       moves = moves.map(move => this.gameData.calcFoodDistance(move));
       const minFoodDistance = Math.min(...moves.map(move => move.food_distance));
-      moves.forEach((move, i) => {
-        if(move.food_distance == minFoodDistance) {
-          moves[i].order += 0.1;
-        }
-      });
+      if(this.gameData.self().health_points < Math.max(60, this.gameData.width) ||
+          minFoodDistance <= 5) {
+        moves.forEach((move, i) => {
+          if(move.food_distance == minFoodDistance) {
+            moves[i].order += 0.1;
+          }
+        });
+      }
     }
 
     // Поиск голов вражеских змей
