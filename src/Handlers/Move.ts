@@ -27,11 +27,12 @@ export default function (request: Request, response: Response) {
     startTime: startTime
   });
   const moves = game.vanga();
+  const iterationsDone = game.getVangaCounter();
 
   const move = moves[0] ? moves[0].direction : "up";
   const workTime = performance.now() - startTime;
-  console.log("(" + moves.length + ") " + moves.map(move => directionArrows[move.direction]).join(" "));
-  console.log('MOVE: ' + directionArrows[move] + ", " + workTime.toFixed(2) + "ms");
+  //console.log("(" + moves.length + ") " + moves.map(move => directionArrows[move.direction]).join(" "));
+  console.log(iterationsDone+ " iterations. Found move chain " + moves.length + ". " + directionArrows[move] + ", " + workTime.toFixed(2) + "ms");
   response.status(200).send({
     move: move
   });

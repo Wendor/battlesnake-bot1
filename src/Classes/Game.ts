@@ -2,6 +2,7 @@ import { TMove, TSnakeMoves, TVangaOptions, GameData } from "../Global";
 import { performance } from 'perf_hooks';
 
 let maxPath: TMove[] = [];
+let vangaCounter = 0;
 
 /**
  * Класс игры. Строит поле игры по переданным ему значениям
@@ -129,8 +130,11 @@ class Game {
         this.gameData.self().health_points
       );
       maxPath = [];
+      vangaCounter = 0;
       selfMoves = { id: this.gameData.you, moves: []};
     }
+
+    vangaCounter++;
 
     if(selfMoves.moves.length >= this.vangaOptions.depth) {
       return selfMoves.moves;
@@ -188,6 +192,10 @@ class Game {
     }
 
     return selfMoves.moves;
+  }
+
+  getVangaCounter(): number {
+    return vangaCounter;
   }
 
 }
