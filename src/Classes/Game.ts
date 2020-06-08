@@ -60,7 +60,7 @@ class Game {
    * @returns {TMove[]}
    * @memberof Game
    */
-  findSelfMoves(findFood = false): TMove[] {
+  findSelfMoves(findFood = true): TMove[] {
     if(this.gameData.self().health_points == 0) return [];
     let moves = this.gameData.getMovesByID(this.gameData.you);
 
@@ -120,18 +120,17 @@ class Game {
    * @memberof Game
    */
   vanga(): TMove[] {
-    let selfMoves = this.snakeMoves.find(sm => sm.id == this.gameData.you);
+    const selfMoves = this.snakeMoves.find(sm => sm.id == this.gameData.you);
 
-    if(!selfMoves) {
+    if(selfMoves.moves.length == 1) {
       this.first = true;
       this.vangaOptions.depth = Math.max(
         (this.gameData.width + this.gameData.height)*2,
         this.gameData.self().coords.length*2,
         this.gameData.self().health_points
       );
-      maxPath = [];
-      vangaCounter = 0;
-      selfMoves = { id: this.gameData.you, moves: []};
+      maxPath = selfMoves.moves;
+      vangaCounter = 1;
     }
 
     vangaCounter++;
@@ -144,7 +143,7 @@ class Game {
       maxPath = selfMoves.moves;
     }
 
-    if(performance.now() - this.vangaOptions.startTime >= 190) {
+    if(performance.now() - this.vangaOptions.startTime >= 180) {
       if(this.first) {
         return maxPath;
       }
@@ -187,7 +186,7 @@ class Game {
       if(maxPath.length > 0) {
         return maxPath;
       } else if(moves.length > 0) {
-        return [moves[0]];
+        return [...selfMoves.moves, moves[0]];
       }
     }
 

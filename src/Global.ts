@@ -1,6 +1,7 @@
 import GameData from './Classes/GameData';
 import Game from './Classes/Game';
 import Snake from './Classes/Snake';
+import ExtRequest from './Classes/ExtRequest';
 
 import TGameData from './Types/TGameData';
 import TMove from './Types/TMove';
@@ -11,6 +12,6 @@ import TCoord from './Types/TCoord';
 import TVangaOptions from './Types/TVangaOptions';
 
 export {
-  Snake, GameData, Game,
+  Snake, GameData, Game, ExtRequest,
   TSnake, TGameData, TMove, TDirection, TCoord, TSnakeMoves, TVangaOptions
 };
