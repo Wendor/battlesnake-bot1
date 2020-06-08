@@ -136,6 +136,10 @@ class Game {
       return selfMoves.moves;
     }
 
+    if(maxPath.length < selfMoves.moves.length) {
+      maxPath = selfMoves.moves;
+    }
+
     if(performance.now() - this.vangaOptions.startTime >= 190) {
       if(this.first) {
         return maxPath;
@@ -170,7 +174,6 @@ class Game {
         return childVanga;
       } else {
         if(maxPath.length < childVanga.length) {
-          //console.log(childVanga);
           maxPath = childVanga;
         }
       }
